@@ -25,6 +25,8 @@ int numberOfTimeOuts=0;
 int numberOfTrials=0;
 long totalRTT;
 int bStop;
+int mode;
+long minRTT, maxRTT, meanRTT, stdRTT;
 
 char Version[] = "1.1";   
 
@@ -64,12 +66,12 @@ int main(int argc, char *argv[])
     numberOfTrials = 0;
     totalRTT =0;
     bStop = 0;
-
+    long RTT[]
     unsigned int averageRate;
     unsigned int bucketSize;
     unsigned int tokenSize;	
     unsigned int messageSize;
-    unsigned int mode;
+    
     unsigned int numberIterations;
     unsigned int debugFlag;
 
@@ -199,7 +201,7 @@ int main(int argc, char *argv[])
        echoString[i] = 0;
     }
     */
-
+    double RTT[numberIterations];
     ClientMsg c_smsg;
     ClientMsg c_rmsg;
     c_smsg.MessageSize = htons((unsigned short)messageSize);
@@ -266,8 +268,14 @@ int main(int argc, char *argv[])
 
     curRTT = (usec2 - usec1);
    // printf("Ping(%d): %ld microseconds\n",RxSeqNumber,curPing);
-
+    RTT[numberOfTrials] = curRTT;
     totalRTT += curRTT;
+    if(totalRTT < minRTT) {
+    minRTT = totalRTT;
+    } 
+   if(totalRTT > maxRTT) {
+    maxRTT = totalRTT;
+    } 
     numberOfTrials++;
     close(sock);
 
@@ -277,8 +285,18 @@ int main(int argc, char *argv[])
     numberIterations--;
   }
   
-  if (numberOfTrials != 0) 
+  if (numberOfTrials != 0) {
     avgRate = (numberOfTrials/(unsigned int)(totalRTT/1000000));
+    meanRTT = (totalRTT/numberOfTrials);
+    float sum= 0.0;
+    // Calculate Standard Deviation
+    for( int i=0; i<numberOfTrials; i++)
+    sum += (RTT[i]-meanRTT) * (RTT[i]-meanRTT);
+
+    sum /= numberOfTrials;
+
+    stdRTT = sum;
+  }
   else 
     avgRate = 0;
   /*if (numberOfTimeOuts != 0) 
@@ -294,17 +312,16 @@ int main(int argc, char *argv[])
 void CatchAlarm(int ignored) { }
 
 void clientCNTCCode() {
-  unsigned int avgRate;//, loss;
+  unsigned int avgRate;
 
-  bStop = 1;
+  
   if (numberOfTrials != 0) 
     avgRate = (numberOfTrials/(unsigned int)(totalRTT/1000000));
   else 
     avgRate = 0;
- /* if (numberOfTimeOuts != 0) 
-    //loss = ((numberOfTimeOuts*100)/numberOfTrials);
-  else 
-   // loss = 0;
-*/
- printf("\nTotal number of messages: %d Avg Sending Rate: %d bits/sec\n", numberOfTrials, avgRate);
+  if( mode == 0) 
+   printf("\nTotal number of messages: %d \t Avg Sending Rate: %d bits/sec \t Min RTT: %f sec \t Max RTT: %f sec \t Mean RTT %f sec \t Standard Deviation RTT %f sec \n", numberOfTrials, avgRate, minRTT/1000000 , maxRTT/1000000, meanRTT/1000000, stdRTT/1000000);
+  
+  else
+ printf("\nTotal number of messages: %d \t Avg Sending Rate: %d bits/sec \n", numberOfTrials, avgRate);
 }

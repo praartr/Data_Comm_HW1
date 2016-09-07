@@ -31,11 +31,20 @@
 typedef struct Client
 {
 unsigned int SequenceNumber;
-unsigned int 
+unsigned int sec;
+unsigned int msec;
 unsigned short MessageSize;
-un
+unsigned short SessionMode;
+}ClientMsg;
 
+typedef struct Server
+{
+unsigned int SequenceNumber;
+unsigned int sec;
+unsigned int msec;
+unsigned short MessageSize;
+unsigned short SessionMode;
+}ServerMsg;
 
-}
 void DieWithError(char *errorMessage);  /* External error handling function */
 

@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     unsigned int averageLossRate;
     unsigned int debugFlag;
     double usec1, usec2;
-	struct timeval *theTime1;
+    struct timeval *theTime1;
     struct timeval *theTime2;
     unsigned int numberOfClients;
     if (argc < 2 || argc > 4)         /* Test for correct number of parameters */
@@ -86,19 +86,21 @@ echoServAddr.sin_family = AF_INET;                /* Internet address family */
           printf("Failure on bind, errno:%d\n",errno);
     }
     printf("after bind\n");
-ServerMsg s_smsg, s_rmsg;
+    ServerMsg *s_smsg = malloc(sizeof(ServerMsg));
+    ServerMsg *s_rmsg = malloc(sizeof(ServerMsg));
     for (;;) /* Run forever */
-    {  printf("entering for loop\n");
+    {   printf("entering for loop\n");
         /* Set the size of the in-out parameter */
         cliAddrLen = sizeof(echoClntAddr);
-printf("After cliaddrlen\n");
+        printf("After cliaddrlen\n");
       //  ServerMsg s_smsg, s_rmsg;
         /* Block until receive message from a client */
-		gettimeofday(theTime1, NULL);
-
-  printf("before recv from"); 
-        if ((recvMsgSize = recvfrom(sock, &s_rmsg, sizeof(s_rmsg), 0,
-            (struct sockaddr *) &echoClntAddr, &cliAddrLen)) < 0)
+       
+       gettimeofday(theTime1, NULL);
+     
+        printf("before recv from\n"); 
+        if ((recvMsgSize = recvfrom(sock, s_rmsg, sizeof(s_rmsg), 0,
+            (struct sockaddr *) &echoClntAddr, cliAddrLen)) < 0)
         {
 //           DieWithError("recvfrom() failed");
           printf("Failure on recvfrom, client: %s, errno:%d\n", inet_ntoa(echoClntAddr.sin_addr),errno);
@@ -109,17 +111,17 @@ printf("After cliaddrlen\n");
         clientAddr = inet_ntoa(echoClntAddr.sin_addr);
         clientPort = ntohs(echoClntAddr.sin_port);
 
-        s_smsg.MessageSize = ntohs(s_rmsg.MessageSize);
-        TotalBytes += s_smsg.MessageSize;
-        s_smsg.SessionMode = ntohs(s_rmsg.SessionMode);
-        s_smsg.SequenceNumber = ntohl(s_rmsg.SequenceNumber); 
-        s_smsg.sec = ntohl(s_rmsg.sec);
-        s_smsg.msec = ntohl(s_rmsg.msec);
+        s_smsg->MessageSize = ntohs(s_rmsg->MessageSize);
+        TotalBytes += s_smsg->MessageSize;
+        s_smsg->SessionMode = ntohs(s_rmsg->SessionMode);
+        s_smsg->SequenceNumber = ntohl(s_rmsg->SequenceNumber); 
+        s_smsg->sec = ntohl(s_rmsg->sec);
+        s_smsg->msec = ntohl(s_rmsg->msec);
        // if Sequence number contains all 1's -  need to change this code
-        if(ntohl(s_rmsg.SequenceNumber) == 11 )
+        if(ntohl(s_rmsg->SequenceNumber) == 11 )
          signal (SIGINT, serverCNTCCode);
         
-        if(s_rmsg.SessionMode == 0) {
+        if(s_rmsg->SessionMode == 0) {
         /* Send received datagram back to the client */
         if (sendto(sock, echoBuffer, recvMsgSize, 0,  
              (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != recvMsgSize) {

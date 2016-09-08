@@ -192,10 +192,10 @@ int main(int argc, char *argv[])
     }
     */
     double RTT[numberIterations];
-    ClientMsg c_smsg;
-    ClientMsg c_rmsg;
-    c_smsg.MessageSize = htons((unsigned short)messageSize);
-    c_smsg.SessionMode = htons((unsigned short)mode);
+    ClientMsg *c_smsg = malloc(sizeof(ClientMsg));
+    ClientMsg *c_rmsg =  malloc(sizeof(ClientMsg));
+    c_smsg->MessageSize = htons((unsigned short)messageSize);
+    c_smsg->SessionMode = htons((unsigned short)mode);
     
     //seqNumberPtr = (int *)echoString;
    // echoString[packetSize-1]='\0';
@@ -218,7 +218,7 @@ printf("before while\n");
 
     //*seqNumberPtr = htonl(seqNumber++); 
     
-    c_smsg.SequenceNumber = htonl(seqNumber++);
+    c_smsg->SequenceNumber = htonl(seqNumber++);
     /* Create a datagram/UDP socket */
     if ((sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0)
         DieWithError("socket() failed");
@@ -227,10 +227,10 @@ printf("before while\n");
     /* Send the string to the server */
     //printf("UDPEchoClient: Send the string: %s to the server: %s \n", echoString,servIP);
     gettimeofday(theTime1, NULL);
-    c_smsg.sec = htonl((unsigned int)(theTime1->tv_sec*1000000));
-    c_smsg.msec = htonl((unsigned int)(theTime1->tv_usec*1000000));
-printf("beforesendtoo\n");   
- if (sendto(sock, &c_smsg, sizeof(c_smsg), 0, (struct sockaddr *)
+    c_smsg->sec = htonl((unsigned int)(theTime1->tv_sec*1000000));
+    c_smsg->msec = htonl((unsigned int)(theTime1->tv_usec*1000000));
+    printf("beforesendtoo\n");   
+ if (sendto(sock, c_smsg, sizeof(c_smsg), 0, (struct sockaddr *)
                &echoServAddr, sizeof(echoServAddr)) != sizeof(c_smsg))
       DieWithError("sendto() sent a different number of bytes than expected");
  printf("AFTER SENDTO\n"); 
@@ -239,7 +239,7 @@ printf("beforesendtoo\n");
     fromSize = sizeof(fromAddr);
     alarm(2);            //set the timeout for 2 seconds
 
-    if ((respStringLen = recvfrom(sock, &c_rmsg, sizeof(c_rmsg), 0,
+    if ((respStringLen = recvfrom(sock, c_rmsg, sizeof(c_rmsg), 0,
          (struct sockaddr *) &fromAddr, &fromSize)) != sizeof(c_smsg)) {
         if (errno == EINTR) 
         { 

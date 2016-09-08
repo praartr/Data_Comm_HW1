@@ -51,7 +51,8 @@ int main(int argc, char *argv[])
         exit(1);
     }
      signal (SIGINT, serverCNTCCode);
-    echoServPort = atoi(argv[1]);  /* First arg:  local port */
+printf("hi");    
+echoServPort = atoi(argv[1]);  /* First arg:  local port */
     averageLossRate = 0.0;
 //$A0
     printf("UDPEchoServer(version:%s): Port:%d\n",(char *)Version,echoServPort);    
@@ -88,7 +89,7 @@ int main(int argc, char *argv[])
         ServerMsg s_smsg, s_rmsg;
         /* Block until receive message from a client */
 		gettimeofday(theTime1, NULL);
-   
+  printf("before recv from"); 
         if ((recvMsgSize = recvfrom(sock, &s_rmsg, sizeof(s_rmsg), 0,
             (struct sockaddr *) &echoClntAddr, &cliAddrLen)) < 0)
         {
@@ -96,7 +97,7 @@ int main(int argc, char *argv[])
           printf("Failure on recvfrom, client: %s, errno:%d\n", inet_ntoa(echoClntAddr.sin_addr),errno);
         }
    
-        
+        printf("AFTER RECVFROM");
         // Storing Client's IP address
         clientAddr = inet_ntoa(echoClntAddr.sin_addr);
         clientPort = ntohs(echoClntAddr.sin_port);

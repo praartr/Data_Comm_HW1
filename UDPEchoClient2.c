@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
        tokenSize = 4*1472;
        messageSize = 1472;
        mode = 0;
-       numberIterations = 0;
+       numberIterations = 1;
        debugFlag = 0;
 
 
@@ -213,8 +213,8 @@ int main(int argc, char *argv[])
     }
     
     echoServAddr.sin_port   = htons(echoServPort);     /* Server port */
-
-  while (numberIterations > 0 && bStop != 1) {
+printf("before while\n");
+  while (numberIterations > 0) {
 
     //*seqNumberPtr = htonl(seqNumber++); 
     
@@ -229,10 +229,11 @@ int main(int argc, char *argv[])
     gettimeofday(theTime1, NULL);
     c_smsg.sec = htonl((unsigned int)(theTime1->tv_sec*1000000));
     c_smsg.msec = htonl((unsigned int)(theTime1->tv_usec*1000000));
-    if (sendto(sock, &c_smsg, sizeof(c_smsg), 0, (struct sockaddr *)
+printf("beforesendtoo\n");   
+ if (sendto(sock, &c_smsg, sizeof(c_smsg), 0, (struct sockaddr *)
                &echoServAddr, sizeof(echoServAddr)) != sizeof(c_smsg))
       DieWithError("sendto() sent a different number of bytes than expected");
-  
+ printf("AFTER SENDTO"\n); 
     /* Recv a response */
 
     fromSize = sizeof(fromAddr);

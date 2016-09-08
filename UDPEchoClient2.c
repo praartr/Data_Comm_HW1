@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     signal (SIGINT, clientCNTCCode);
 
     servIP = argv[1];           /* First arg: server IP address (dotted quad) */
-    echoServerPort = atoi(argv[2]);
+    echoServPort = atoi(argv[2]);
     /* get info from parameters , or default to defaults if they're not specified */
     if (argc == 3) {
        

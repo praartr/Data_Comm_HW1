@@ -12,10 +12,22 @@
 *
 *********************************************************/
 #include "UDPEcho.h"
+#include <netdb.h>
+#include <signal.h>
+#include <sys/types.h>
+#include <sys/time.h>
+#include <time.h>
+
+
+void clientCNTCCode();
+void CatchAlarm(int ignored);
 
 void DieWithError(char *errorMessage);  /* External error handling function */
 
-
+unsigned long currRTT;
+unsigned int TotalBytes;
+char *clientAddr;
+unsigned int clientPort;
 char Version[] = "1.1";   
 
 int main(int argc, char *argv[])
@@ -29,8 +41,9 @@ int main(int argc, char *argv[])
     int recvMsgSize;                 /* Size of received message */
     double avgLossRate;
     unsigned int debugFlag;
-    char * clientAddr[MSGMAX];
-    unsigned short clientPort[MSGMAX];
+    unsigned long usec1, usec2;
+	struct timeval *theTime1;
+    struct timeval *theTime2;
     unsigned int numberOfClients;
     if (argc < 3 || argc > 4)         /* Test for correct number of parameters */
     {
@@ -74,17 +87,22 @@ int main(int argc, char *argv[])
         cliAddrLen = sizeof(echoClntAddr);
         ServerMsg s_smsg, s_rmsg;
         /* Block until receive message from a client */
+		gettimeofday(theTime1, NULL);
+   
         if ((recvMsgSize = recvfrom(sock, &s_rmsg, sizeof(s_rmsg), 0,
             (struct sockaddr *) &echoClntAddr, &cliAddrLen)) < 0)
         {
 //           DieWithError("recvfrom() failed");
           printf("Failure on recvfrom, client: %s, errno:%d\n", inet_ntoa(echoClntAddr.sin_addr),errno);
         }
+        gettimeofday(theTime1,null);
+        
         // Storing Client's IP address
-        clientAddr[numberOfClients++] = inet_ntoa(echoClntAddr.sin_addr);
-        clientPort[numberOfClients++]]ntohs(echoClntAddr.sin_port);
+        clientAddr = inet_ntoa(echoClntAddr.sin_addr);
+        clientPort = ntohs(echoClntAddr.sin_port);
 
         s_smsg.MessageSize = ntohs(s_rmsg.MessageSize);
+        Total_Bytes += s_smsg.MessageSize;
         s_smsg.SessionMode = ntohs(s_rmsg.SessionMode);
         s_smsg.SequenceNumber = ntohl(s_rmsg.SequenceNumber); 
         s_smsg.sec = ntohl(s_rmsg.sec);
@@ -100,6 +118,13 @@ int main(int argc, char *argv[])
 //            DieWithError("sendto() sent a different number of bytes than expected");
           printf("Failure on sendTo, client: %s, errno:%d\n", inet_ntoa(echoClntAddr.sin_addr),errno);
         }
+		alarm(0);            //clear the timeout 
+    gettimeofday(theTime2, NULL);
+
+    usec1 = (theTime2->tv_sec) * 1000000 + (theTime2->tv_usec);
+    usec2 = (theTime1->tv_sec) * 1000000 + (theTime1->tv_usec);
+
+    curRTT = (usec2 - usec1);
        }
      
     }
@@ -108,16 +133,7 @@ int main(int argc, char *argv[])
 
 
 void serverCNTCCode() {
-  unsigned int avgRate;
-
   
-  if (numberOfTrials != 0) 
-    avgRate = (numberOfTrials/(unsigned int)(totalRTT/1000000));
-  else 
-    avgRate = 0;
-  if( mode == 0) 
-   printf("\nTotal number of messages: %d \t Avg Sending Rate: %d bits/sec \t Min RTT: %f sec \t Max RTT: %f sec \t Mean RTT %f sec \t Standard Deviation RTT %f sec \n", numberOfTrials, avgRate, minRTT/1000000 , maxRTT/1000000, meanRTT/1000000, stdRTT/1000000);
+     printf("\n %d \t  %d  \n  %s \t %d \t %l \t %d \t %l \n", 1,TotalBytes, clientAddr, clientPort, currRTT, TotalBytes,(TotalBytes*8)/currRTT);
   
-  else
- printf("\nTotal number of messages: %d \t Avg Sending Rate: %d bits/sec \n", numberOfTrials, avgRate);
 }

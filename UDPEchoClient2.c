@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     unsigned int debugFlag;
 
 
-    if (argc < 9 || argc > 10 )    /* Test for correct number of arguments */
+    if (argc < 3 || argc > 10 )    /* Test for correct number of arguments */
     {
         fprintf(stderr,"Usage: %s <Server IP> [<Server Port>] [<averageRate>][<bucketSize>][<tokenSize>][<messageSize>][<mode>][<numberIterations>] [<debugFlag>]\n", argv[0]);
         exit(1);
@@ -85,10 +85,10 @@ int main(int argc, char *argv[])
     signal (SIGINT, clientCNTCCode);
 
     servIP = argv[1];           /* First arg: server IP address (dotted quad) */
-
+    echoServerPort = atoi(argv[2]);
     /* get info from parameters , or default to defaults if they're not specified */
-    if (argc == 2) {
-       echoServPort = 7;
+    if (argc == 3) {
+       
        averageRate = 1000000;
        bucketSize = 4*1472;
        tokenSize = 4*1472;
@@ -99,18 +99,8 @@ int main(int argc, char *argv[])
 
 
     }
-    else if (argc == 3) {
-       echoServPort = atoi(argv[2]);
-       averageRate = 1000000;
-       bucketSize = 4*1472;
-       tokenSize = 4*1472;
-       messageSize = 1472;
-       mode = 0;
-       numberIterations = 0;
-       debugFlag = 0;
-    }
+    
     else if (argc == 4) {
-       echoServPort = atoi(argv[2]);
        averageRate = atoi(argv[3]);
        bucketSize = 4*1472;
        tokenSize = 4*1472;
@@ -120,7 +110,7 @@ int main(int argc, char *argv[])
        debugFlag = 0;
     }
     else if (argc == 5) {
-       echoServPort = atoi(argv[2]);
+     //  echoServPort = atoi(argv[2]);
        averageRate = atoi(argv[3]);
        bucketSize = atoi(argv[4]);
        tokenSize = 4*1472;
@@ -130,7 +120,7 @@ int main(int argc, char *argv[])
        debugFlag = 0;
     }
     else if (argc == 6) {
-      echoServPort = atoi(argv[2]);
+      //echoServPort = atoi(argv[2]);
       averageRate = atoi(argv[3]);
       bucketSize = atoi(argv[4]);
       tokenSize = atoi(argv[5]);
@@ -140,7 +130,7 @@ int main(int argc, char *argv[])
       debugFlag = 0;
     }
     else if (argc == 7) {
-      echoServPort = atoi(argv[2]);
+     // echoServPort = atoi(argv[2]);
       averageRate = atoi(argv[3]);
       bucketSize = atoi(argv[4]);
       tokenSize = atoi(argv[5]);
@@ -151,7 +141,7 @@ int main(int argc, char *argv[])
       
     }
     else if (argc == 8) {
-      echoServPort = atoi(argv[2]);
+     // echoServPort = atoi(argv[2]);
       averageRate = atoi(argv[3]);
       bucketSize = atoi(argv[4]);
       tokenSize = atoi(argv[5]);
@@ -162,7 +152,7 @@ int main(int argc, char *argv[])
       
     }
     else if (argc == 9) {
-      echoServPort = atoi(argv[2]);
+      //echoServPort = atoi(argv[2]);
       averageRate = atoi(argv[3]);
       bucketSize = atoi(argv[4]);
       tokenSize = atoi(argv[5]);
@@ -172,7 +162,7 @@ int main(int argc, char *argv[])
       debugFlag = 0;
     }
     else if (argc == 10) {
-      echoServPort = atoi(argv[2]);
+     // echoServPort = atoi(argv[2]);
       averageRate = atoi(argv[3]);
       bucketSize = atoi(argv[4]);
       tokenSize = atoi(argv[5]);

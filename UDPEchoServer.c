@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     char echoBuffer[ECHOMAX];        /* Buffer for echo string */
     unsigned short echoServPort;     /* Server port */
     int recvMsgSize;                 /* Size of received message */
-    double averageLossRate;
+    unsigned int averageLossRate;
     unsigned int debugFlag;
     double usec1, usec2;
 	struct timeval *theTime1;
@@ -52,8 +52,10 @@ int main(int argc, char *argv[])
     }
      signal (SIGINT, serverCNTCCode);
 printf("hi");    
-echoServPort = atoi(argv[1]);  /* First arg:  local port */
-    averageLossRate = 0.0;
+    if(argc ==2){
+      echoServPort = atoi(argv[1]);  /* First arg:  local port */
+      averageLossRate = 0;
+    }
 //$A0
     printf("UDPEchoServer(version:%s): Port:%d\n",(char *)Version,echoServPort);    
     if (argc == 3) {
@@ -61,7 +63,7 @@ echoServPort = atoi(argv[1]);  /* First arg:  local port */
        debugFlag = 0;
     }
    else {
-       averageLossRate = atof(argv[2]);
+       averageLossRate = atoi(argv[2]);
        debugFlag = atoi(argv[3]);
     }
     /* Create socket for sending/receiving datagrams */

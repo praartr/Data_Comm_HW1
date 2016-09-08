@@ -45,14 +45,14 @@ int main(int argc, char *argv[])
 	struct timeval *theTime1;
     struct timeval *theTime2;
     unsigned int numberOfClients;
-    if (argc < 3 || argc > 4)         /* Test for correct number of parameters */
+    if (argc < 2 || argc > 4)         /* Test for correct number of parameters */
     {
         fprintf(stderr,"Usage:  %s <UDP SERVER PORT>\n", argv[0]);
         exit(1);
     }
      signal (SIGINT, serverCNTCCode);
     echoServPort = atoi(argv[1]);  /* First arg:  local port */
-    
+    averageLossRate = 0.0;
 //$A0
     printf("UDPEchoServer(version:%s): Port:%d\n",(char *)Version,echoServPort);    
     if (argc == 3) {

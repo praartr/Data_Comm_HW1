@@ -72,7 +72,7 @@ printf("hi");
 //        DieWithError("socket() failed");
       printf("Failure on socket call , errno:%d\n",errno);
     }
-    printf("after socket\n")
+    printf("after socket\n");
     /* Construct local address structure */
     memset(&echoServAddr, 0, sizeof(echoServAddr));   /* Zero out structure */
 printf("after memset\n");    

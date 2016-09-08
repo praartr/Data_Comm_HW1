@@ -23,10 +23,10 @@ void clientCNTCCode();
 void CatchAlarm(int ignored);
 int numberOfTimeOuts=0;
 int numberOfTrials=0;
-long totalRTT;
+double totalRTT;
 int bStop;
 int mode;
-long minRTT, maxRTT, meanRTT, stdRTT;
+double minRTT, maxRTT, meanRTT, stdRTT;
 
 char Version[] = "1.1";   
 
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     numberOfTrials = 0;
     totalRTT =0;
     bStop = 0;
-    long RTT[]
+  
     unsigned int averageRate;
     unsigned int bucketSize;
     unsigned int tokenSize;	
@@ -290,7 +290,8 @@ int main(int argc, char *argv[])
     meanRTT = (totalRTT/numberOfTrials);
     float sum= 0.0;
     // Calculate Standard Deviation
-    for( int i=0; i<numberOfTrials; i++)
+	int i;
+    for(i=0; i<numberOfTrials; i++)
     sum += (RTT[i]-meanRTT) * (RTT[i]-meanRTT);
 
     sum /= numberOfTrials;

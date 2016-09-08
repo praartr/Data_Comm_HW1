@@ -19,12 +19,12 @@
 #include <time.h>
 
 
-void clientCNTCCode();
+void serverCNTCCode();
 void CatchAlarm(int ignored);
 
 void DieWithError(char *errorMessage);  /* External error handling function */
 
-unsigned long currRTT;
+double currRTT;
 unsigned int TotalBytes;
 char *clientAddr;
 unsigned int clientPort;
@@ -39,9 +39,9 @@ int main(int argc, char *argv[])
     char echoBuffer[ECHOMAX];        /* Buffer for echo string */
     unsigned short echoServPort;     /* Server port */
     int recvMsgSize;                 /* Size of received message */
-    double avgLossRate;
+    double averageLossRate;
     unsigned int debugFlag;
-    unsigned long usec1, usec2;
+    double usec1, usec2;
 	struct timeval *theTime1;
     struct timeval *theTime2;
     unsigned int numberOfClients;
@@ -95,20 +95,20 @@ int main(int argc, char *argv[])
 //           DieWithError("recvfrom() failed");
           printf("Failure on recvfrom, client: %s, errno:%d\n", inet_ntoa(echoClntAddr.sin_addr),errno);
         }
-        gettimeofday(theTime1,null);
+   
         
         // Storing Client's IP address
         clientAddr = inet_ntoa(echoClntAddr.sin_addr);
         clientPort = ntohs(echoClntAddr.sin_port);
 
         s_smsg.MessageSize = ntohs(s_rmsg.MessageSize);
-        Total_Bytes += s_smsg.MessageSize;
+        TotalBytes += s_smsg.MessageSize;
         s_smsg.SessionMode = ntohs(s_rmsg.SessionMode);
         s_smsg.SequenceNumber = ntohl(s_rmsg.SequenceNumber); 
         s_smsg.sec = ntohl(s_rmsg.sec);
         s_smsg.msec = ntohl(s_rmsg.msec);
        // if Sequence number contains all 1's -  need to change this code
-        if(s_rsmg_SequenceNumber == 11 )
+        if(ntohl(s_rmsg.SequenceNumber) == 11 )
          signal (SIGINT, serverCNTCCode);
         
         if(s_rmsg.SessionMode == 0) {
@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
     usec1 = (theTime2->tv_sec) * 1000000 + (theTime2->tv_usec);
     usec2 = (theTime1->tv_sec) * 1000000 + (theTime1->tv_usec);
 
-    curRTT = (usec2 - usec1);
+    currRTT = (usec2 - usec1);
        }
      
     }

@@ -62,19 +62,21 @@ printf("hi");
        averageLossRate = atoi(argv[2]);
        debugFlag = 0;
     }
-   else {
+   else if(argc ==4) {
        averageLossRate = atoi(argv[2]);
        debugFlag = atoi(argv[3]);
     }
+   printf("After parameter\n");
     /* Create socket for sending/receiving datagrams */
     if ((sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
 //        DieWithError("socket() failed");
       printf("Failure on socket call , errno:%d\n",errno);
     }
-
+    printf("after socket\n")
     /* Construct local address structure */
     memset(&echoServAddr, 0, sizeof(echoServAddr));   /* Zero out structure */
-    echoServAddr.sin_family = AF_INET;                /* Internet address family */
+printf("after memset\n");    
+echoServAddr.sin_family = AF_INET;                /* Internet address family */
     echoServAddr.sin_addr.s_addr = htonl(INADDR_ANY); /* Any incoming interface */
     echoServAddr.sin_port = htons(echoServPort);      /* Local port */
 
@@ -83,7 +85,7 @@ printf("hi");
 //        DieWithError("bind() failed");
           printf("Failure on bind, errno:%d\n",errno);
     }
-    
+    printf("after bind\n");
     for (;;) /* Run forever */
     {
         /* Set the size of the in-out parameter */

@@ -233,7 +233,7 @@ printf("beforesendtoo\n");
  if (sendto(sock, &c_smsg, sizeof(c_smsg), 0, (struct sockaddr *)
                &echoServAddr, sizeof(echoServAddr)) != sizeof(c_smsg))
       DieWithError("sendto() sent a different number of bytes than expected");
- printf("AFTER SENDTO"\n); 
+ printf("AFTER SENDTO\n"); 
     /* Recv a response */
 
     fromSize = sizeof(fromAddr);

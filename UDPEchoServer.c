@@ -86,13 +86,16 @@ echoServAddr.sin_family = AF_INET;                /* Internet address family */
           printf("Failure on bind, errno:%d\n",errno);
     }
     printf("after bind\n");
+ServerMsg s_smsg, s_rmsg;
     for (;;) /* Run forever */
-    {
+    {  printf("entering for loop\n");
         /* Set the size of the in-out parameter */
         cliAddrLen = sizeof(echoClntAddr);
-        ServerMsg s_smsg, s_rmsg;
+printf("After cliaddrlen\n");
+      //  ServerMsg s_smsg, s_rmsg;
         /* Block until receive message from a client */
 		gettimeofday(theTime1, NULL);
+
   printf("before recv from"); 
         if ((recvMsgSize = recvfrom(sock, &s_rmsg, sizeof(s_rmsg), 0,
             (struct sockaddr *) &echoClntAddr, &cliAddrLen)) < 0)

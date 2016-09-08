@@ -230,7 +230,7 @@ printf("before while\n");
     c_smsg->sec = htonl((unsigned int)(theTime1->tv_sec*1000000));
     c_smsg->msec = htonl((unsigned int)(theTime1->tv_usec*1000000));
     printf("beforesendtoo\n");   
- if (sendto(sock, c_smsg, sizeof(c_smsg), 0, (struct sockaddr *)
+ if (sendto(sock, c_smsg, sizeof(*c_smsg), 0, (struct sockaddr *)
                &echoServAddr, sizeof(echoServAddr)) != sizeof(c_smsg))
       DieWithError("sendto() sent a different number of bytes than expected");
  printf("AFTER SENDTO\n"); 
@@ -239,7 +239,7 @@ printf("before while\n");
     fromSize = sizeof(fromAddr);
     alarm(2);            //set the timeout for 2 seconds
     printf("before recvfrom\n");
-    if ((respStringLen = recvfrom(sock, c_rmsg, sizeof(c_rmsg), 0,
+    if ((respStringLen = recvfrom(sock, c_rmsg, sizeof(*c_rmsg), 0,
          (struct sockaddr *) &fromAddr, &fromSize)) != sizeof(c_smsg)) {
         if (errno == EINTR) 
         { 

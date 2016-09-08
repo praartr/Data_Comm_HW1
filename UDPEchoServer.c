@@ -97,7 +97,7 @@ echoServAddr.sin_family = AF_INET;                /* Internet address family */
         /* Block until receive message from a client */
        
        gettimeofday(theTime1, NULL);
-     
+     printf("%d\n",sizeof(s_rmsg));
         printf("before recv from\n"); 
         if ((recvMsgSize = recvfrom(sock, s_rmsg, sizeof(s_rmsg), 0,
             (struct sockaddr *) &echoClntAddr, cliAddrLen)) < 0)

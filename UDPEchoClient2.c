@@ -240,7 +240,7 @@ printf("before while\n");
     alarm(2);            //set the timeout for 2 seconds
 
     if ((respStringLen = recvfrom(sock, c_rmsg, sizeof(c_rmsg), 0,
-         (struct sockaddr *) &fromAddr, &fromSize)) != sizeof(c_smsg)) {
+         (struct sockaddr *) &fromAddr, fromSize)) != sizeof(c_smsg)) {
         if (errno == EINTR) 
         { 
            printf("Received a  Timeout !!!!!\n"); 

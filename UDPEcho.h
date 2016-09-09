@@ -35,7 +35,7 @@ unsigned int sec;
 unsigned int msec;
 unsigned short MessageSize;
 unsigned short SessionMode;
-}ClientMsg;
+};
 
 struct Server
 {
@@ -44,7 +44,7 @@ unsigned int sec;
 unsigned int msec;
 unsigned short MessageSize;
 unsigned short SessionMode;
-}ServerMsg;
+};
 
 void DieWithError(char *errorMessage);  /* External error handling function */
 

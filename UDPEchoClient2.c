@@ -192,8 +192,8 @@ int main(int argc, char *argv[])
     }
     */
     double RTT[numberIterations];
-    ClientMsg *c_smsg = (ClientMsg*) calloc(1,sizeof(ClientMsg));
-    ClientMsg *c_rmsg = (ClientMsg*) calloc(1,sizeof(ClientMsg));
+    Client *c_smsg = malloc(sizeof(Client));
+    Client *c_rmsg = malloc(sizeof(Client));
     c_smsg->MessageSize = htons((unsigned short)messageSize);
     c_smsg->SessionMode = htons((unsigned short)mode);
     

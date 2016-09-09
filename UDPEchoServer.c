@@ -77,7 +77,8 @@ printf("hi");
     memset(&echoServAddr, 0, sizeof(echoServAddr));   /* Zero out structure */
 printf("after memset\n");    
 echoServAddr.sin_family = AF_INET;                /* Internet address family */
-    echoServAddr.sin_addr.s_addr = htonl(INADDR_ANY); /* Any incoming interface */
+    echoServAddr.sin_addr.s_addr = malloc(sizeof(unsigned long));
+ echoServAddr.sin_addr.s_addr = htonl(INADDR_ANY); /* Any incoming interface */
     echoServAddr.sin_port = htons(echoServPort);      /* Local port */
 
     /* Bind to the local address */

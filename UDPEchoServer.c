@@ -145,5 +145,5 @@ echoServAddr.sin_family = AF_INET;                /* Internet address family */
 void serverCNTCCode() {
   
      printf("\n %d \t  %d  \n  %s \t %d \t %l \t %d \t %l \n", 1,TotalBytes, clientAddr, clientPort, currRTT, TotalBytes,(TotalBytes*8)/currRTT);
-  
+exit(0);  
 }

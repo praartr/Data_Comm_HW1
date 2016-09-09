@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
     else if (argc == 4) {
        averageRate = atoi(argv[3]);
        bucketSize = 4*14;
-       tokenSize = 4*14
+       tokenSize = 4*14;
        messageSize = 14;
        mode = 0;
        numberIterations = 0;

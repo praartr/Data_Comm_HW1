@@ -75,10 +75,10 @@ printf("hi");
     printf("after socket\n");
     /* Construct local address structure */
     memset(&echoServAddr, 0, sizeof(echoServAddr));   /* Zero out structure */
-printf("after memset\n");    
-echoServAddr.sin_family = AF_INET;                /* Internet address family */
+    printf("after memset\n");    
+    echoServAddr.sin_family = AF_INET;                /* Internet address family */
     echoServAddr.sin_addr.s_addr = malloc(sizeof(unsigned long));
- echoServAddr.sin_addr.s_addr = htonl(INADDR_ANY); /* Any incoming interface */
+    echoServAddr.sin_addr.s_addr = htonl(INADDR_ANY); /* Any incoming interface */
     echoServAddr.sin_port = htons(echoServPort);      /* Local port */
 
     /* Bind to the local address */
@@ -90,26 +90,28 @@ echoServAddr.sin_family = AF_INET;                /* Internet address family */
     Server *s_smsg = (Server*)malloc(sizeof(Server));
     Server *s_rmsg = (Server*)malloc(sizeof(Server));
     for (;;) /* Run forever */
-    {   printf("entering for loop\n");
+    {  printf("entering for loop\n");
         /* Set the size of the in-out parameter */
-        cliAddrLen = sizeof(echoClntAddr);
-        printf("After cliaddrlen\n");
+       cliAddrLen = sizeof(echoClntAddr);
+       printf("After cliaddrlen\n");
       //  ServerMsg s_smsg, s_rmsg;
         /* Block until receive message from a client */
        
        gettimeofday(theTime1, NULL);
-     printf("%d\n",sizeof(s_rmsg));
-        printf("before recv from\n"); 
-       recvMsgSize =
- recvfrom(sock, s_rmsg, sizeof(*s_rmsg), 0,
-            (struct sockaddr *) &echoClntAddr, &cliAddrLen);// < 0)
-        //{
+       printf("%d\n",sizeof(s_rmsg));
+       printf("before recv from\n"); 
+       alarm(2);
+       
+       if(recvMsgSize = recvfrom(sock, s_rmsg, sizeof(*s_rmsg), 0,
+            (struct sockaddr *) &echoClntAddr, &cliAddrLen) < 0)
+        {
           printf("hi\t hi");
-//           DieWithError("recvfrom() failed");
-         // printf("Failure on recvfrom, client: %s, errno:%d\n", inet_ntoa(echoClntAddr.sin_addr),errno);
-       // }
-   
-        printf("AFTER RECVFROM");
+          DieWithError("recvfrom() failed");
+         printf("Failure on recvfrom, client: %s, errno:%d\n", inet_ntoa(echoClntAddr.sin_addr),errno);
+        }
+        alarm(0);
+        
+        printf("AFTER RECVFROM: recvMsgSize = %d",recvMsgSize);
         // Storing Client's IP address
         clientAddr = inet_ntoa(echoClntAddr.sin_addr);
         clientPort = ntohs(echoClntAddr.sin_port);

@@ -89,10 +89,10 @@ int main(int argc, char *argv[])
     /* get info from parameters , or default to defaults if they're not specified */
     if (argc == 3) {
        
-       averageRate = 1000000;
-       bucketSize = 4*1472;
-       tokenSize = 4*1472;
-       messageSize = 1472;
+       averageRate = 1000;
+       bucketSize = 4*14;
+       tokenSize = 4*14;
+       messageSize = 14;
        mode = 0;
        numberIterations = 1;
        debugFlag = 0;
@@ -102,9 +102,9 @@ int main(int argc, char *argv[])
     
     else if (argc == 4) {
        averageRate = atoi(argv[3]);
-       bucketSize = 4*1472;
-       tokenSize = 4*1472;
-       messageSize = 1472;
+       bucketSize = 4*14;
+       tokenSize = 4*14
+       messageSize = 14;
        mode = 0;
        numberIterations = 0;
        debugFlag = 0;
@@ -113,8 +113,8 @@ int main(int argc, char *argv[])
      //  echoServPort = atoi(argv[2]);
        averageRate = atoi(argv[3]);
        bucketSize = atoi(argv[4]);
-       tokenSize = 4*1472;
-       messageSize = 1472;
+       tokenSize = 4*14;
+       messageSize = 14;
        mode = 0;
        numberIterations = 0;
        debugFlag = 0;
@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
       averageRate = atoi(argv[3]);
       bucketSize = atoi(argv[4]);
       tokenSize = atoi(argv[5]);
-      messageSize = 1472;
+      messageSize = 14;
       mode = 0;
       numberIterations = 0;
       debugFlag = 0;

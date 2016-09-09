@@ -105,7 +105,7 @@ echoServAddr.sin_family = AF_INET;                /* Internet address family */
         {
           printf("hi\t hi");
 //           DieWithError("recvfrom() failed");
-          printf("Failure on recvfrom, client: %s, errno:%d\n", inet_ntoa(echoClntAddr.sin_addr),errno);
+         // printf("Failure on recvfrom, client: %s, errno:%d\n", inet_ntoa(echoClntAddr.sin_addr),errno);
         }
    
         printf("AFTER RECVFROM");

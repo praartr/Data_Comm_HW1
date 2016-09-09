@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     int sock;                        /* Socket */
     struct sockaddr_in echoServAddr; /* Local address */
     struct sockaddr_in echoClntAddr; /* Client address */
-    unsigned int cliAddrLen;         /* Length of incoming message */
+    int cliAddrLen;         /* Length of incoming message */
     char echoBuffer[ECHOMAX];        /* Buffer for echo string */
     unsigned short echoServPort;     /* Server port */
     int recvMsgSize;                 /* Size of received message */
@@ -100,7 +100,7 @@ echoServAddr.sin_family = AF_INET;                /* Internet address family */
        gettimeofday(theTime1, NULL);
      printf("%d\n",sizeof(s_rmsg));
         printf("before recv from\n"); 
-       // if ((recvMsgSize =
+       recvMsgSize =
  recvfrom(sock, s_rmsg, sizeof(*s_rmsg), 0,
             (struct sockaddr *) &echoClntAddr, &cliAddrLen);// < 0)
         //{
@@ -127,7 +127,7 @@ echoServAddr.sin_family = AF_INET;                /* Internet address family */
         if(s_rmsg->SessionMode == 0) {
         /* Send received datagram back to the client */
         if (sendto(sock,s_smsg,sizeof(*s_smsg), 0,  
-             (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sizeof(*s_smsg)) {
+             (struct sockaddr *) &echoClntAddr, cliAddrLen) != sizeof(*s_smsg)) {
 //            DieWithError("sendto() sent a different number of bytes than expected");
           printf("Failure on sendTo, client: %s, errno:%d\n", inet_ntoa(echoClntAddr.sin_addr),errno);
         }

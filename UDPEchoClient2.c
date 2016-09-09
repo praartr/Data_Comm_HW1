@@ -17,7 +17,7 @@
 #include <sys/types.h>
 #include <sys/time.h>
 #include <time.h>
-
+#include <arpa/inet.h>
 
 void clientCNTCCode();
 void CatchAlarm(int ignored);

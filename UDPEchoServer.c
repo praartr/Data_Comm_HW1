@@ -127,7 +127,7 @@ echoServAddr.sin_family = AF_INET;                /* Internet address family */
         if(s_rmsg->SessionMode == 0) {
         /* Send received datagram back to the client */
         if (sendto(sock,s_smsg,sizeof(*s_smsg), 0,  
-             (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != recvMsgSize) {
+             (struct sockaddr *) &echoClntAddr, sizeof(echoClntAddr)) != sizeof(*s_smg)) {
 //            DieWithError("sendto() sent a different number of bytes than expected");
           printf("Failure on sendTo, client: %s, errno:%d\n", inet_ntoa(echoClntAddr.sin_addr),errno);
         }

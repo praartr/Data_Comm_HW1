@@ -237,7 +237,7 @@ printf("before while\n");
     /* Recv a response */
 
     fromSize = sizeof(fromAddr);
-    alarm(2);            //set the timeout for 2 seconds
+    alarm(4);            //set the timeout for 2 seconds
     printf("before recvfrom\n");
     if ((respStringLen = recvfrom(sock, c_rmsg, sizeof(*c_rmsg), 0,
          (struct sockaddr *) &fromAddr, &fromSize)) != sizeof(c_smsg)) {

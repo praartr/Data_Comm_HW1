@@ -86,8 +86,8 @@ echoServAddr.sin_family = AF_INET;                /* Internet address family */
           printf("Failure on bind, errno:%d\n",errno);
     }
     printf("after bind\n");
-    ServerMsg *s_smsg = malloc(sizeof(ServerMsg));
-    ServerMsg *s_rmsg = malloc(sizeof(ServerMsg));
+    struct Server *s_smsg = (struct Server*)malloc(sizeof(struct Server));
+    struct Server *s_rmsg = (struct Server*)malloc(sizeof(struct Server));
     for (;;) /* Run forever */
     {   printf("entering for loop\n");
         /* Set the size of the in-out parameter */

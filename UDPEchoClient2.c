@@ -192,8 +192,8 @@ int main(int argc, char *argv[])
     }
     */
     double RTT[numberIterations];
-    ClientMsg *c_smsg = malloc(sizeof(ClientMsg));
-    ClientMsg *c_rmsg =  malloc(sizeof(ClientMsg));
+    struct Client *c_smsg = (struct Client*) malloc(sizeof(struct Client));
+    struct Client *c_rmsg = (struct Client*) malloc(sizeof(struct Client));
     c_smsg->MessageSize = htons((unsigned short)messageSize);
     c_smsg->SessionMode = htons((unsigned short)mode);
     

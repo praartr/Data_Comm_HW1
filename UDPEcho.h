@@ -28,23 +28,23 @@
 #define INADDR_NONE  0xffffffff
 #endif
 
-typedef struct Client
+struct Client
 {
 unsigned int SequenceNumber;
 unsigned int sec;
 unsigned int msec;
 unsigned short MessageSize;
 unsigned short SessionMode;
-}ClientMsg;
+};
 
-typedef struct Server
+struct Server
 {
 unsigned int SequenceNumber;
 unsigned int sec;
 unsigned int msec;
 unsigned short MessageSize;
 unsigned short SessionMode;
-}ServerMsg;
+};
 
 void DieWithError(char *errorMessage);  /* External error handling function */
 

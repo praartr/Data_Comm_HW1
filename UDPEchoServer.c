@@ -100,13 +100,14 @@ echoServAddr.sin_family = AF_INET;                /* Internet address family */
        gettimeofday(theTime1, NULL);
      printf("%d\n",sizeof(s_rmsg));
         printf("before recv from\n"); 
-        if ((recvMsgSize = recvfrom(sock, s_rmsg, sizeof(*s_rmsg), 0,
-            (struct sockaddr *) &echoClntAddr, &cliAddrLen)) < 0)
-        {
+       // if ((recvMsgSize =
+ recvfrom(sock, s_rmsg, sizeof(*s_rmsg), 0,
+            (struct sockaddr *) &echoClntAddr, &cliAddrLen);// < 0)
+        //{
           printf("hi\t hi");
 //           DieWithError("recvfrom() failed");
          // printf("Failure on recvfrom, client: %s, errno:%d\n", inet_ntoa(echoClntAddr.sin_addr),errno);
-        }
+       // }
    
         printf("AFTER RECVFROM");
         // Storing Client's IP address

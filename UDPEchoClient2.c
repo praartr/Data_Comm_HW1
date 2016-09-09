@@ -316,4 +316,5 @@ void clientCNTCCode() {
   
   else
  printf("\nTotal number of messages: %d \t Avg Sending Rate: %d bits/sec \n", numberOfTrials, avgRate);
+exit(0);
 }
